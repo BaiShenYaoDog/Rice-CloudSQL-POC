@@ -16,8 +16,10 @@ public class Agent {
         ConfigUtil.saveDefaultConfig();
         ConfigUtil.reloadConfig();
 
-        tomcatServer = new TomcatServer();
-        tomcatServer.startServer(ConfigUtil.getConfig().getInt("serverPort"));
+        if (ConfigUtil.getConfig().getBoolean("serverSettings.enable")) {
+            tomcatServer = new TomcatServer();
+            tomcatServer.startServer(ConfigUtil.getConfig().getInt("serverSettings.port"));
+        }
 
         inst.addTransformer(new DbHttpUtilTransformer());
         inst.addTransformer(new SignUtilTransformer());

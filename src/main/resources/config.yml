@@ -1,1 +1,6 @@
-serverPort: 8080
+# 服务器设置
+serverSettings:
+  # 开关
+  enable: true
+  # 端口
+  port: 8080

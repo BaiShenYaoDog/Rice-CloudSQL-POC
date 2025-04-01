@@ -12,7 +12,7 @@ public class DbHttpUtilVisitor extends ClassVisitor {
     }
 
     public String getNewURL() {
-        return "http://127.0.0.1:" + ConfigUtil.getConfig().getInt("serverPort") + "/api/public/db/sql";
+        return "http://127.0.0.1:" + ConfigUtil.getConfig().getInt("serverSettings.port") + "/api/public/db/sql";
     }
 
     @Override
