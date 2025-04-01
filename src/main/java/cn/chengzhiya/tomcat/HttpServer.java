@@ -66,7 +66,7 @@ public class HttpServer extends HttpServlet {
                             sqlBuilder.append(dbSql.getString("tableName"));
                             sqlBuilder.append("(").append(dbSql.getString("field")).append(")").append(" ");
                             sqlBuilder.append("VALUES").append(" ");
-                            int fieldInfoMapSize = dbSql.getJSONArray("fieldInfoMap").size();
+                            int fieldInfoMapSize = dbSql.getInteger("fieldInfoMap");
                             for (int i = 0; i < fieldInfoMapSize; i++) {
                                 sqlBuilder.append("?");
                                 if (i < fieldInfoMapSize - 1) {
