@@ -1,6 +1,7 @@
 package cn.chengzhiya;
 
 import cn.chengzhiya.tomcat.TomcatServer;
+import cn.chengzhiya.transformer.title.DbConstantTransformer;
 import cn.chengzhiya.transformer.title.DbHttpUtilTransformer;
 import cn.chengzhiya.transformer.title.SignUtilTransformer;
 import cn.chengzhiya.util.ConfigUtil;
@@ -16,6 +17,8 @@ public class Agent {
         ConfigUtil.saveDefaultConfig();
         ConfigUtil.reloadConfig();
 
+//        TokenUtil.getToken();
+
         if (ConfigUtil.getConfig().getBoolean("serverSettings.enable")) {
             tomcatServer = new TomcatServer();
             tomcatServer.startServer(ConfigUtil.getConfig().getInt("serverSettings.port"));
@@ -23,5 +26,6 @@ public class Agent {
 
         inst.addTransformer(new DbHttpUtilTransformer());
         inst.addTransformer(new SignUtilTransformer());
+        inst.addTransformer(new DbConstantTransformer());
     }
 }

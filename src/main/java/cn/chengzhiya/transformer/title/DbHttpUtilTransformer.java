@@ -10,7 +10,7 @@ import java.security.ProtectionDomain;
 public class DbHttpUtilTransformer implements ClassFileTransformer {
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) {
-        if (className.contains("handy") && className.contains("lib/DbHttpUtil")) {
+        if (className.contains("handy") && (className.contains("lib/DbHttpUtil") || className.contains("lib/DbUtil"))) {
             ClassReader cr = new ClassReader(classfileBuffer);
             ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_FRAMES);
             cr.accept(new DbHttpUtilVisitor(cw), ClassReader.EXPAND_FRAMES);

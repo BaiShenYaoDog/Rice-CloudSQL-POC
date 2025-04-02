@@ -1,6 +1,6 @@
 package cn.chengzhiya.visitor;
 
-import cn.chengzhiya.util.ConfigUtil;
+import cn.chengzhiya.util.HttpUtil;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
@@ -9,10 +9,6 @@ import org.objectweb.asm.Opcodes;
 public class DbHttpUtilVisitor extends ClassVisitor {
     public DbHttpUtilVisitor(ClassWriter classWriter) {
         super(Opcodes.ASM9, classWriter);
-    }
-
-    public String getNewURL() {
-        return "http://127.0.0.1:" + ConfigUtil.getConfig().getInt("serverSettings.port") + "/api/public/db/sql";
     }
 
     @Override
@@ -27,8 +23,8 @@ public class DbHttpUtilVisitor extends ClassVisitor {
                     // 修改获取SQL的服务器地址
                     if (owner.contains("lib/DbHttpUtil") && "DB_URL".equals(name) && "Ljava/lang/String;".equals(descriptor)) {
                         if (opcode == Opcodes.GETSTATIC) {
-                            System.out.println("已强制修改 " + owner + ".DB_URL 的返回值为" + getNewURL());
-                            super.visitLdcInsn(getNewURL());
+                            System.out.println("已强制修改 " + owner + ".DB_URL 的返回值为" + HttpUtil.getNewURL());
+                            super.visitLdcInsn(HttpUtil.getNewURL());
 
                             return;
                         }
@@ -46,24 +42,24 @@ public class DbHttpUtilVisitor extends ClassVisitor {
                     super.visitFieldInsn(opcode, owner, name, descriptor);
                 }
 
-//                @Override
-//                public void visitInsn(int opcode) {
-//                    // 打印执行的SQL
-//                    if (opcode == Opcodes.ARETURN) {
-//                        super.visitInsn(Opcodes.DUP);
-//                        super.visitFieldInsn(Opcodes.GETSTATIC,
-//                                "java/lang/System",
-//                                "out",
-//                                "Ljava/io/PrintStream;");
-//                        super.visitInsn(Opcodes.SWAP);
-//                        super.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
-//                                "java/io/PrintStream",
-//                                "println",
-//                                "(Ljava/lang/String;)V",
-//                                false);
-//                    }
-//                    super.visitInsn(opcode);
-//                }
+                @Override
+                public void visitInsn(int opcode) {
+                    // 打印执行的SQL
+                    if (opcode == Opcodes.ARETURN) {
+                        super.visitInsn(Opcodes.DUP);
+                        super.visitFieldInsn(Opcodes.GETSTATIC,
+                                "java/lang/System",
+                                "out",
+                                "Ljava/io/PrintStream;");
+                        super.visitInsn(Opcodes.SWAP);
+                        super.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
+                                "java/io/PrintStream",
+                                "println",
+                                "(Ljava/lang/String;)V",
+                                false);
+                    }
+                    super.visitInsn(opcode);
+                }
             };
         }
         return mv;

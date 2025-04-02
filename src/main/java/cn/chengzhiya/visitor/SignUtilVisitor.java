@@ -1,4 +1,4 @@
-package cn.chengzhiya.visitor.other;
+package cn.chengzhiya.visitor;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
